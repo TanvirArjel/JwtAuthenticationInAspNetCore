@@ -1,0 +1,61 @@
+<div class="card">
+  <div class="card-header">
+    <h1 class="mb-0"><strong>Register</strong></h1>
+  </div>
+  <form [formGroup]="registrationFrom" (ngSubmit)="register()">
+    
+    <div class="card-body">
+      <div *ngIf="serverErrorMessage" class="alert alert-danger">
+        {{serverErrorMessage}}
+      </div>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input formControlName="email" #email (focusout) ="isEmailAlreadyExists(email.value)"  type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+        <div class="text-danger" *ngIf="registrationFrom.controls['email'].touched && !registrationFrom.controls['email'].valid">
+          <div [hidden]="!registrationFrom.controls['email'].hasError('required')">Please enter your email!</div>
+          <div [hidden]="!registrationFrom.controls['email'].hasError('email')">Please enter a valid email address!</div>
+          <div [hidden]="!registrationFrom.controls['email'].hasError('duplicateEmail')">The email is already exists!</div>
+        </div>
+        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      </div>
+
+      <div class="form-group">
+        <label for="userName">User Name</label>
+        <input formControlName="userName" #userName (focusout) ="isUserNameAlreadyExists(userName.value)" type="text" class="form-control" id="userName" aria-describedby="emailHelp" placeholder="Choose a user name">
+        <div class="text-danger" *ngIf="registrationFrom.controls['userName'].touched && !registrationFrom.controls['userName'].valid">
+          <div [hidden]="!registrationFrom.controls['userName'].hasError('required')">Please choose your user name!</div>
+          <div [hidden]="!registrationFrom.controls['userName'].hasError('minlength')">User name should be at least 4 characters long!</div>
+          <div [hidden]="!registrationFrom.controls['userName'].hasError('maxlength')">User name should not be more than 20 characters!</div>
+          <div [hidden]="!registrationFrom.controls['userName'].hasError('duplicateUserName')">The user name is already taken!</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input formControlName="password" type="password" class="form-control" id="password" placeholder="Password">
+        <div class="text-danger" *ngIf="registrationFrom.controls['password'].touched && !registrationFrom.controls['password'].valid">
+          <div [hidden]="!registrationFrom.controls['password'].hasError('required')">Please choose your password!</div>
+          <div [hidden]="!registrationFrom.controls['password'].hasError('minlength')">Password should be at least 6 characters long!</div>
+          <div [hidden]="!registrationFrom.controls['password'].hasError('maxlength')">Password should not be more than 20 characters!</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input formControlName="confirmPassword" type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password">
+        <div class="text-danger" *ngIf="registrationFrom.controls['confirmPassword'].touched && !registrationFrom.controls['confirmPassword'].valid">
+          <div [hidden]="!registrationFrom.controls['confirmPassword'].hasError('required')">Please confirm your password!</div>
+          <div [hidden]="!registrationFrom.controls['confirmPassword'].hasError('notEqual')">Password does not match!</div>
+        </div>
+      </div>
+
+    </div>
+    <div class="card-footer">
+      <button type="submit" class="btn btn-success">Submit</button>
+      <a class="btn btn-primary" [routerLink]='["/user/login"]'>Already Register?</a>
+    </div>
+
+  </form>
+</div>
+
+

@@ -1,0 +1,44 @@
+<div class="card">
+  <div class="card-header">
+    <h3><strong>User Login</strong></h3>
+  </div>
+  <form [formGroup]="loginFrom" (ngSubmit)="getAccessToken()">
+    <div class="card-body">
+      <div *ngIf="serverErrorMessage" class="alert alert-danger">
+        {{serverErrorMessage}}
+      </div>
+      <div class="form-group">
+        <label for="userName">User Name</label>
+        <input formControlName="userName" type="email" class="form-control" id="userName"
+               aria-describedby="userNameHelp" placeholder="Enter user name">
+        <div class="text-danger" *ngIf="loginFrom.controls['userName'].touched && !loginFrom.controls['userName'].valid">
+          <div [hidden]="!loginFrom.controls['userName'].hasError('required')">Please enter your user name!</div>
+          <div [hidden]="!loginFrom.controls['userName'].hasError('minlength')">User name should be at least 4 characters long!</div>
+          <div [hidden]="!loginFrom.controls['userName'].hasError('maxlength')">User name should not be more than 20 characters!</div>
+        </div>
+
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input formControlName="password" type="password" class="form-control" id="password" placeholder="Password">
+        <div class="text-danger" *ngIf="loginFrom.controls['password'].touched && !loginFrom.controls['password'].valid">
+          <div [hidden]="!loginFrom.controls['password'].hasError('required')">Please enter your password!</div>
+          <div [hidden]="!loginFrom.controls['password'].hasError('minlength')">Password should be at least 6 characters long!</div>
+          <div [hidden]="!loginFrom.controls['password'].hasError('maxlength')">Password should not be more than 20 characters!</div>
+        </div>
+      </div>
+      <div class="form-group form-check">
+        <input formControlName="rememberMe" type="checkbox" class="form-check-input" id="exampleCheck1">
+        <label class="form-check-label" for="exampleCheck1">Remember me?</label>
+      </div>
+    </div>
+
+    <div class="card-footer">
+      <button type="submit" class="btn btn-success">Submit</button>
+      <button type="button" class="btn btn-warning">Forgot Password?</button>
+      <a class="btn btn-primary" [routerLink]='["/user/sign-up"]'>Not Registered?</a>
+    </div>
+  </form>
+</div>
+
+
