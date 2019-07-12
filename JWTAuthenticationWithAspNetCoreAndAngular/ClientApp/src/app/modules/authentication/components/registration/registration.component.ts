@@ -29,7 +29,7 @@ export class RegistrationComponent implements OnInit {
       let passwordInput = group.controls[passwordKey], confirmPasswordInput = group.controls[confirmPasswordKey];
       if (passwordInput.value && confirmPasswordInput.value) {
         if (passwordInput.value !== confirmPasswordInput.value) {
-          return confirmPasswordInput.setErrors({ notEqual: true })
+          return confirmPasswordInput.setErrors({ notEqual: true });
         } else {
           return confirmPasswordInput.setErrors(null);
         }
@@ -77,7 +77,7 @@ export class RegistrationComponent implements OnInit {
     if (this.registrationFrom.valid) {
       this.registratonService.register(this.registrationFrom.value).subscribe((jsonWebToken) => {
         if (jsonWebToken != null) {
-          sessionStorage.setItem('loggedInUser', JSON.stringify(jsonWebToken))
+          sessionStorage.setItem('loggedInUser', JSON.stringify(jsonWebToken));
           this.navMenuService.setUserName(jsonWebToken.userName);
           this.router.navigate(['/fetch-data']);
         } else {
@@ -85,11 +85,11 @@ export class RegistrationComponent implements OnInit {
         }
       }, (error) => {
           if (error.status === 400) {
-            let errorMessage = "One or more inputs failed validation!"
+            let errorMessage = "One or more inputs failed validation!";
             if ('errors' in error.error) {
-              errorMessage = JSON.stringify(error.error.errors)
+              errorMessage = JSON.stringify(error.error.errors);
             } else {
-              errorMessage = JSON.stringify(error.error)
+              errorMessage = JSON.stringify(error.error);
             }
           this.serverErrorMessage = errorMessage;
         } else {
@@ -98,7 +98,8 @@ export class RegistrationComponent implements OnInit {
 
       });
     } else {
-      this.validateAllFormFields(this.registrationFrom);
+      this.registrationFrom.markAllAsTouched();
+      //this.validateAllFormFields(this.registrationFrom);
     }
   }
 

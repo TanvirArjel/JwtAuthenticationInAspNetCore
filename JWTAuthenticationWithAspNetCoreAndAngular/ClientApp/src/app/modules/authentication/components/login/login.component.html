@@ -2,7 +2,7 @@
   <div class="card-header">
     <h3><strong>User Login</strong></h3>
   </div>
-  <form [formGroup]="loginFrom" (ngSubmit)="getAccessToken()">
+  <form [formGroup]="loginFrom" (ngSubmit)="getAccessToken()" autocomplete="off">
     <div class="card-body">
       <div *ngIf="serverErrorMessage" class="alert alert-danger">
         {{serverErrorMessage}}

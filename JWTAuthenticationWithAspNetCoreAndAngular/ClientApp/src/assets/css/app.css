@@ -17,6 +17,20 @@ table {
   vertical-align: middle !important;
 }
 
+
+
+@-webkit-keyframes autofill {
+  to {
+    background: transparent;
+  }
+}
+
+input:-webkit-autofill {
+  -webkit-animation-name: autofill;
+  -webkit-animation-fill-mode: both;
+  
+}
+
 /* SCROLLBAR */
 /*::-webkit-scrollbar {
   width: 5px;
@@ -32,20 +46,3 @@ table {
 }*/
 
 
-
-select.ng-invalid.ng-touched, input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
-  border: 1px solid red;
-}
-
-select.ng-valid.ng-touched, input.ng-valid.ng-touched, textarea.ng-valid.ng-touched, div.form-control.ng-valid.ng-touched {
-  border: 1px solid #28a745;
-}
-
-.btn:focus, .btn:active, .page-item .page-link, .page-item.active .page-link {
-  outline: none !important;
-  box-shadow: none;
-}
-
-/*.input-group .form-control, .input-group-addon, .input-group-btn {
-  display: table-cell;
-}*/
