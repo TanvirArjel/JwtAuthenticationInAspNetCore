@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace JWTAuthenticationWithAspNetCoreAndAngular.DTOs
+namespace JWTAuthenticationWithAspNetCoreAndAngular.ApiModels
 {
-    public class UserLoginDto
+    public class UserLoginModel
     {
         [Required]
         public String Username { get; set; }

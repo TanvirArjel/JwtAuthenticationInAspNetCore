@@ -1,5 +1,4 @@
 using JWTAuthenticationWithAspNetCoreAndAngular.Data;
-using JWTAuthenticationWithAspNetCoreAndAngular.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -12,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
+using JWTAuthenticationWithAspNetCoreAndAngular.Data.Entities;
 
 namespace JWTAuthenticationWithAspNetCoreAndAngular
 {
@@ -27,7 +27,7 @@ namespace JWTAuthenticationWithAspNetCoreAndAngular
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<JwtAuthenticationDbContext>(options =>
+            services.AddDbContextPool<JwtAuthenticationDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
@@ -102,7 +102,10 @@ namespace JWTAuthenticationWithAspNetCoreAndAngular
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
+            app.UseRouting();
+
             app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(routes => { routes.MapControllers(); });
 

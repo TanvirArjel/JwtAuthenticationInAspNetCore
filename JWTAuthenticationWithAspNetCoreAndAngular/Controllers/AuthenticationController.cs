@@ -1,6 +1,4 @@
 ﻿using JWTAuthenticationWithAspNetCoreAndAngular.Data;
-using JWTAuthenticationWithAspNetCoreAndAngular.DTOs;
-using JWTAuthenticationWithAspNetCoreAndAngular.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +10,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using JWTAuthenticationWithAspNetCoreAndAngular.ApiModels;
+using JWTAuthenticationWithAspNetCoreAndAngular.Data.Entities;
 
 namespace JWTAuthenticationWithAspNetCoreAndAngular.Controllers
 {
@@ -21,21 +21,18 @@ namespace JWTAuthenticationWithAspNetCoreAndAngular.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly JwtAuthenticationDbContext _dbContext;
         public IConfiguration Configuration { get; }
 
-        public AuthenticationController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
-            JwtAuthenticationDbContext dbContext, IConfiguration configuration)
+        public AuthenticationController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _dbContext = dbContext;
             Configuration = configuration;
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] UserRegistrationDto registerModel)
+        public async Task<IActionResult> Register([FromBody] UserRegistrationModel registerModel)
         {
             if (ModelState.IsValid)
             {
@@ -57,20 +54,20 @@ namespace JWTAuthenticationWithAspNetCoreAndAngular.Controllers
         [HttpGet]
         public async Task<ActionResult<bool>> IsEmailAlreadyExists(string email)
         {
-            bool statusResult = await _dbContext.ApplicationUsers.AnyAsync(au => au.Email == email);
+            bool statusResult = await _userManager.Users.AnyAsync(au => au.Email == email);
             return statusResult;
         }
 
         [HttpGet]
         public async Task<ActionResult<bool>> IsUserNameAlreadyExists(string userName)
         {
-            bool statusResult = await _dbContext.ApplicationUsers.AnyAsync(au => au.UserName == userName);
+            bool statusResult = await _userManager.Users.AnyAsync(au => au.UserName == userName);
             return statusResult;
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] UserLoginDto loginDto)
+        public async Task<IActionResult> Login([FromBody] UserLoginModel loginDto)
         {
             if (ModelState.IsValid)
             {
@@ -82,14 +79,14 @@ namespace JWTAuthenticationWithAspNetCoreAndAngular.Controllers
                 }
 
                 var user = await _userManager.FindByNameAsync(loginDto.Username);
-                JsonWebToken jsonWebToken = GenerateJsonWebToken(user);
+                JsonWebTokenModel jsonWebToken = GenerateJsonWebToken(user);
                 return Ok(jsonWebToken);
             }
 
             return BadRequest(ModelState);
         }
 
-        private JsonWebToken GenerateJsonWebToken(ApplicationUser user)
+        private JsonWebTokenModel GenerateJsonWebToken(ApplicationUser user)
         {
             var utcNow = DateTime.UtcNow;
 
@@ -115,7 +112,7 @@ namespace JWTAuthenticationWithAspNetCoreAndAngular.Controllers
 
             var accessToken = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            JsonWebToken jsonWebToken = new JsonWebToken()
+            JsonWebTokenModel jsonWebToken = new JsonWebTokenModel()
             {
                 UserName = user.UserName,
                 Email = user.Email,

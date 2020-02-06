@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using JWTAuthenticationWithAspNetCoreAndAngular.Models;
+using JWTAuthenticationWithAspNetCoreAndAngular.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
