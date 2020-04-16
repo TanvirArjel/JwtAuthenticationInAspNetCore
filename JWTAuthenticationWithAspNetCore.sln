@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28809.33
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1F3C1773-3412-4128-AA90-59CB54601111}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0241C770-B089-4A3A-85FD-D690C5116672}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "JwtAuthenticationApi", "JwtAuthenticationApi", "{ED6C073B-1887-4D6A-99FE-0D345CFCFF42}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiClients", "ApiClients", "{A5DF3185-B076-40E9-BD40-C4875C658AB5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Angular", "src\ApiClients\Angular\Angular.csproj", "{0BC0685C-DC3A-466B-A48F-8EDDFDFCD5DB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JwtAuthentication.Infrastructure", "src\JwtAuthenticationApi\JwtAuthentication.Infrastructure\JwtAuthentication.Infrastructure.csproj", "{CE557471-940E-44FA-83FC-6DD256FBE7EC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JwtAuthentication.Api", "src\JwtAuthenticationApi\JwtAuthentication.Api\JwtAuthentication.Api.csproj", "{E7784A30-6F1A-43A9-8470-B1838AAEFD97}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0BC0685C-DC3A-466B-A48F-8EDDFDFCD5DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BC0685C-DC3A-466B-A48F-8EDDFDFCD5DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BC0685C-DC3A-466B-A48F-8EDDFDFCD5DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BC0685C-DC3A-466B-A48F-8EDDFDFCD5DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE557471-940E-44FA-83FC-6DD256FBE7EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE557471-940E-44FA-83FC-6DD256FBE7EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE557471-940E-44FA-83FC-6DD256FBE7EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE557471-940E-44FA-83FC-6DD256FBE7EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7784A30-6F1A-43A9-8470-B1838AAEFD97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7784A30-6F1A-43A9-8470-B1838AAEFD97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7784A30-6F1A-43A9-8470-B1838AAEFD97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7784A30-6F1A-43A9-8470-B1838AAEFD97}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ED6C073B-1887-4D6A-99FE-0D345CFCFF42} = {0241C770-B089-4A3A-85FD-D690C5116672}
+		{A5DF3185-B076-40E9-BD40-C4875C658AB5} = {0241C770-B089-4A3A-85FD-D690C5116672}
+		{0BC0685C-DC3A-466B-A48F-8EDDFDFCD5DB} = {A5DF3185-B076-40E9-BD40-C4875C658AB5}
+		{CE557471-940E-44FA-83FC-6DD256FBE7EC} = {ED6C073B-1887-4D6A-99FE-0D345CFCFF42}
+		{E7784A30-6F1A-43A9-8470-B1838AAEFD97} = {ED6C073B-1887-4D6A-99FE-0D345CFCFF42}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {409E482A-C334-4823-B268-FBF6AAC8D9E6}
+	EndGlobalSection
+EndGlobal
