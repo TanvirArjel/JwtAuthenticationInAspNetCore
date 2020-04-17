@@ -20,6 +20,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JwtAuthentication.Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JwtAuthentication.Api", "src\JwtAuthenticationApi\JwtAuthentication.Api\JwtAuthentication.Api.csproj", "{E7784A30-6F1A-43A9-8470-B1838AAEFD97}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JwtAuthentication.Application", "src\JwtAuthenticationApi\JwtAuthentication.Application\JwtAuthentication.Application.csproj", "{B47D8794-5645-4AF0-81DE-DF32F9DC3DDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JwtAuthentication.Domain", "src\JwtAuthenticationApi\JwtAuthentication.Domain\JwtAuthentication.Domain.csproj", "{F6F2B301-9D4C-429E-B274-9D15953E87DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +42,14 @@ Global
 		{E7784A30-6F1A-43A9-8470-B1838AAEFD97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7784A30-6F1A-43A9-8470-B1838AAEFD97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7784A30-6F1A-43A9-8470-B1838AAEFD97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B47D8794-5645-4AF0-81DE-DF32F9DC3DDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B47D8794-5645-4AF0-81DE-DF32F9DC3DDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B47D8794-5645-4AF0-81DE-DF32F9DC3DDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B47D8794-5645-4AF0-81DE-DF32F9DC3DDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6F2B301-9D4C-429E-B274-9D15953E87DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6F2B301-9D4C-429E-B274-9D15953E87DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6F2B301-9D4C-429E-B274-9D15953E87DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6F2B301-9D4C-429E-B274-9D15953E87DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -48,6 +60,8 @@ Global
 		{0BC0685C-DC3A-466B-A48F-8EDDFDFCD5DB} = {A5DF3185-B076-40E9-BD40-C4875C658AB5}
 		{CE557471-940E-44FA-83FC-6DD256FBE7EC} = {ED6C073B-1887-4D6A-99FE-0D345CFCFF42}
 		{E7784A30-6F1A-43A9-8470-B1838AAEFD97} = {ED6C073B-1887-4D6A-99FE-0D345CFCFF42}
+		{B47D8794-5645-4AF0-81DE-DF32F9DC3DDF} = {ED6C073B-1887-4D6A-99FE-0D345CFCFF42}
+		{F6F2B301-9D4C-429E-B274-9D15953E87DE} = {ED6C073B-1887-4D6A-99FE-0D345CFCFF42}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {409E482A-C334-4823-B268-FBF6AAC8D9E6}

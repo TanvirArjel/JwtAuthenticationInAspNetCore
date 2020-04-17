@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace JwtAuthentication.Api.ApiModels
+namespace JwtAuthentication.Api.ApiModels.AuthenticationModels
 {
-    public class UserLoginModel
+    public class LoginModel
     {
         [Required]
         public string UserName { get; set; }

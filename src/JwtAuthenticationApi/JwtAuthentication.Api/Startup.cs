@@ -1,7 +1,10 @@
 using System;
 using System.Text;
+using AspNetCore.ServiceRegistration.Dynamic.Attributes;
+using AspNetCore.ServiceRegistration.Dynamic.Extensions;
+using AspNetCore.ServiceRegistration.Dynamic.Interfaces;
+using JwtAuthentication.Domain.Entities;
 using JwtAuthentication.Infrastructure.Data;
-using JwtAuthentication.Infrastructure.Data.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -70,10 +73,11 @@ namespace JwtAuthentication.Api
                     ValidIssuer = Configuration["Jwt:Issuer"],
                     ValidAudience = Configuration["Jwt:Issuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-
                 };
             });
 
+            services.AddServicesOfType<IScopedService>();
+            services.AddServicesWithAttributeOfType<ScopedServiceAttribute>();
             services.AddCors();
 
             services.AddControllersWithViews();
@@ -89,9 +93,11 @@ namespace JwtAuthentication.Api
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

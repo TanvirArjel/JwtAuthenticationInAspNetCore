@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace JwtAuthentication.Api.ApiModels
+namespace JwtAuthentication.Api.ApiModels.AuthenticationModels
 {
-    public class UserRegistrationModel
+    public class RegistrationModel
     {
         [Required]
         [EmailAddress]

@@ -5,8 +5,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using JwtAuthentication.Api.ApiModels;
-using JwtAuthentication.Infrastructure.Data.Entities;
+using JwtAuthentication.Api.ApiModels.AuthenticationModels;
+using JwtAuthentication.Application.Services;
+using JwtAuthentication.Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -23,14 +24,17 @@ namespace JwtAuthentication.Api.ApiControllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IAuthenticationService _authenticationService;
 
         public AuthenticationController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
+            IAuthenticationService authenticationService,
             IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _authenticationService = authenticationService;
             Configuration = configuration;
         }
 
@@ -38,15 +42,15 @@ namespace JwtAuthentication.Api.ApiControllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Register([FromBody] UserRegistrationModel registerModel)
+        public async Task<IActionResult> Register([FromBody] RegistrationModel registerModel)
         {
-            ApplicationUser user = new ApplicationUser { UserName = registerModel.UserName, Email = registerModel.Email };
-            IdentityResult identityResult = await _userManager.CreateAsync(user, registerModel.Password);
+            ApplicationUser applicationUser = new ApplicationUser { UserName = registerModel.UserName, Email = registerModel.Email };
+            IdentityResult identityResult = await _userManager.CreateAsync(applicationUser, registerModel.Password);
 
             if (identityResult.Succeeded)
             {
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return Ok(GenerateJsonWebToken(user));
+                await _authenticationService.SendEmailConfirmationCodeAsync(applicationUser.Email);
+                return Ok();
             }
 
             return BadRequest(identityResult.Errors);
@@ -67,9 +71,57 @@ namespace JwtAuthentication.Api.ApiControllers
             return statusResult;
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ResendEmailConfirmationCode(ResendEmailConfirmationCodeModel model)
+        {
+            ApplicationUser applicationUser = await _userManager.FindByEmailAsync(model.Email);
+            IdentityError identityError = new IdentityError();
+
+            if (applicationUser == null)
+            {
+                identityError.Code = "Email";
+                identityError.Description = "Provided email is not related to any account.";
+                return BadRequest(identityError);
+            }
+
+            if (applicationUser.EmailConfirmed)
+            {
+                identityError.Code = "Email";
+                identityError.Description = "Email is already confirmed.";
+                return BadRequest(identityError);
+            }
+
+            bool isExists = await _authenticationService.HasActiveEmailConfirmationCodeAsync(model.Email);
+
+            if (isExists)
+            {
+                identityError.Code = "Email";
+                identityError.Description = "You already have an active code. Please wait! You may receive the code in your email. If not, please try again after sometimes.";
+                return BadRequest(identityError);
+            }
+
+            await _authenticationService.SendEmailConfirmationCodeAsync(model.Email);
+            return Ok();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> ConfirmEmail(EmailConfirmationModel model)
+        {
+            IdentityError identityError = await _authenticationService.ConfirmEmailAsync(model.Email, model.Code);
+
+            if (identityError == null)
+            {
+                return Ok();
+            }
+
+            return BadRequest(identityError);
+        }
+
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> Login([FromBody] UserLoginModel loginModel)
+        public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
         {
             IdentityError identityError = new IdentityError();
 
@@ -133,6 +185,27 @@ namespace JwtAuthentication.Api.ApiControllers
             return BadRequest(identityError);
         }
 
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> SendPasswordResetCode(ForgotPasswordModel forgotPasswordModel)
+        {
+            await _authenticationService.SendPasswordResetCodeAsync(forgotPasswordModel.Email);
+            return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordModel model)
+        {
+            IdentityError identityError = await _authenticationService.ResetPasswordAsync(model.Email, model.Code, model.Password);
+            if (identityError != null)
+            {
+                return BadRequest(identityError);
+            }
+
+            return Ok();
+        }
+
         private JsonWebTokenModel GenerateJsonWebToken(ApplicationUser user)
         {
             DateTime utcNow = DateTime.UtcNow;
@@ -154,8 +227,7 @@ namespace JwtAuthentication.Api.ApiControllers
                 notBefore: utcNow,
                 expires: utcNow.AddSeconds(Configuration.GetValue<int>("Jwt:Lifetime")),
                 audience: Configuration.GetValue<string>("Jwt:Issuer"),
-                issuer: Configuration.GetValue<string>("Jwt:Issuer")
-            );
+                issuer: Configuration.GetValue<string>("Jwt:Issuer"));
 
             string accessToken = new JwtSecurityTokenHandler().WriteToken(jwt);
 

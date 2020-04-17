@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
+using JwtAuthentication.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using JwtAuthentication.Api.Models;
 
 namespace JwtAuthentication.Api.Controllers
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace JwtAuthentication.Infrastructure.Data.Entities
+namespace JwtAuthentication.Domain.Entities
 {
     public class ApplicationRole : IdentityRole<long>
     {

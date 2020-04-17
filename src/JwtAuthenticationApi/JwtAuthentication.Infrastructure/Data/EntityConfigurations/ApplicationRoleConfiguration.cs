@@ -1,4 +1,4 @@
-﻿using JwtAuthentication.Infrastructure.Data.Entities;
+﻿using JwtAuthentication.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
